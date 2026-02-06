@@ -3,13 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "docker compose up",
-    "dev:convex": "convex dev",
+    "dev": "convex dev",
     "setup": "convex dev --until-success",
     "typecheck": "tsc --noEmit -p convex",
     "deploy": "convex deploy",
-    "generate": "convex codegen",
-    "admin-key": "docker compose exec backend ./generate_admin_key.sh"
+    "generate": "convex codegen"
   },
   "dependencies": {
     "convex": "^1.17.4"

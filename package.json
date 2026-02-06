@@ -8,14 +8,13 @@
   "scripts": {
     "dev": "turbo dev --ui tui",
     "dev:web": "turbo dev --filter=web",
-    "dev:docker": "turbo dev --filter=@repo/convex-backend",
-    "dev:convex": "turbo dev:convex --filter=@repo/convex-backend",
-    "docker:down": "docker compose -f packages/convex-backend/docker-compose.yml down",
-    "docker:admin-key": "docker compose -f packages/convex-backend/docker-compose.yml exec backend ./generate_admin_key.sh",
+    "dev:docker": "turbo dev --filter=@repo/docker",
+    "docker:down": "docker compose -f packages/docker/docker-compose.yml down",
+    "docker:admin-key": "turbo admin-key --filter=@repo/docker",
     "convex:deploy": "turbo deploy --filter=@repo/convex-backend",
     "build": "turbo build",
     "lint": "turbo lint",
-    "stop": "docker compose -f packages/convex-backend/docker-compose.yml down"
+    "stop": "docker compose -f packages/docker/docker-compose.yml down"
   },
   "devDependencies": {
     "turbo": "^2.3.4"

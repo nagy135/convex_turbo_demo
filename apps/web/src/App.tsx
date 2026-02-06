@@ -3,17 +3,16 @@ import { api } from "@repo/convex-backend/convex/_generated/api";
 import { useState } from "react";
 
 function App() {
-  const tasks = useQuery(api.tasks.list);
-  const createTask = useMutation(api.tasks.create);
-  const toggleTask = useMutation(api.tasks.toggle);
-  const removeTask = useMutation(api.tasks.remove);
-  const [newTask, setNewTask] = useState("");
+  const messages = useQuery(api.messages.list);
+  const createMessage = useMutation(api.messages.create);
+  const toggleRead = useMutation(api.messages.markRead);
+  const [newMessage, setNewMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTask.trim()) return;
-    await createTask({ text: newTask });
-    setNewTask("");
+    if (!newMessage.trim()) return;
+    await createMessage({ text: newMessage });
+    setNewMessage("");
   };
 
   return (
@@ -26,9 +25,9 @@ function App() {
         <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
           <input
             type="text"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            placeholder="Add a new task..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Add a new message..."
             className="flex-1 px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500"
           />
           <button
@@ -40,34 +39,30 @@ function App() {
         </form>
 
         <ul className="space-y-2">
-          {tasks?.map((task) => (
+          {messages?.map((message) => (
             <li
-              key={task._id}
+              key={message._id}
               className="flex items-center gap-3 p-3 bg-gray-800 rounded"
             >
               <input
                 type="checkbox"
-                checked={task.isCompleted}
-                onChange={() => toggleTask({ id: task._id })}
+                checked={message.isRead}
+                onChange={() => toggleRead({ id: message._id })}
                 className="w-5 h-5"
               />
               <span
-                className={`flex-1 ${task.isCompleted ? "line-through text-gray-500" : ""}`}
+                className={`flex-1 ${message.isRead ? "line-through text-gray-500" : ""}`}
               >
-                {task.text}
+                {message.text}
               </span>
-              <button
-                onClick={() => removeTask({ id: task._id })}
-                className="text-red-400 hover:text-red-300"
-              >
-                Delete
-              </button>
             </li>
           ))}
         </ul>
 
-        {tasks?.length === 0 && (
-          <p className="text-center text-gray-500">No tasks yet. Add one above!</p>
+        {messages?.length === 0 && (
+          <p className="text-center text-gray-500">
+            No messages yet. Add one above!
+          </p>
         )}
       </div>
     </div>
